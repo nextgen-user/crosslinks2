@@ -1,0 +1,346 @@
+/* Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Share+Tech+Mono&display=swap');
+
+/* --- VARIABLES & RESET --- 
+*/
+:root {
+    --primary-color: #00ffff; /* Neon Cyan */
+    --secondary-color: #f0f;  /* Neon Magenta (for glitch) */
+    --bg-color: #020010;       /* Deep Space Blue/Black */
+    --glow-shadow: 0 0 5px var(--primary-color),
+                   0 0 10px var(--primary-color),
+                   0 0 20px var(--primary-color),
+                   0 0 40px var(--primary-color);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* Hide the default mouse cursor */
+    cursor: none;
+}
+
+body {
+    font-family: 'Share Tech Mono', monospace;
+    background-color: var(--bg-color);
+    color: var(--primary-color);
+    overflow-x: hidden;
+    min-height: 100vh;
+    background-image: linear-gradient(
+        rgba(0, 255, 255, 0.05) 1px, 
+        transparent 1px
+    ),
+    linear-gradient(
+        90deg, 
+        rgba(0, 255, 255, 0.05) 1px, 
+        transparent 1px
+    );
+    background-size: 30px 30px;
+}
+
+/* --- HOLOGRAPHIC CURSOR --- 
+*/
+#holographic-cursor {
+    position: fixed;
+    /* Set top/left by JS */
+    width: 25px;
+    height: 25px;
+    border: 2px solid var(--primary-color);
+    border-radius: 50%;
+    transform: translate(-50%, -50%); /* Center on cursor pos */
+    pointer-events: none; /* Let clicks pass through */
+    z-index: 9999;
+    box-shadow: var(--glow-shadow);
+    transition: transform 0.1s ease-out, width 0.2s ease, height 0.2s ease, background-color 0.2s ease;
+    
+    /* Flicker animation */
+    animation: cursor-flicker 2s infinite;
+}
+
+/* Cursor interaction state */
+#holographic-cursor.hover-link {
+    transform: translate(-50%, -50%) scale(2);
+    background-color: rgba(0, 255, 255, 0.2);
+}
+
+@keyframes cursor-flicker {
+    0%, 100% { opacity: 1; box-shadow: var(--glow-shadow); }
+    50% { opacity: 0.8; box-shadow: 0 0 5px var(--primary-color); }
+}
+
+/* --- SCANLINES & BG EFFECTS --- 
+*/
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0) 50%,
+        rgba(0, 0, 0, 0.2) 70%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    background-size: 100% 3px;
+    animation: scan 10s linear infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes scan {
+    from { background-position: 0 0; }
+    to { background-position: 0 100vh; }
+}
+
+/* --- NAVIGATION BAR --- 
+*/
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 5%;
+    border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+    background: rgba(2, 0, 16, 0.5);
+    backdrop-filter: blur(5px);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 100;
+    animation: slide-in 1s ease-out;
+}
+
+nav .logo a {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    color: #fff;
+    text-shadow: 0 0 10px var(--primary-color);
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+nav ul li {
+    margin-left: 2rem;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--primary-color);
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: text-shadow 0.3s ease;
+}
+
+nav a:hover {
+    color: #fff;
+    text-shadow: 0 0 15px var(--primary-color);
+}
+
+/* --- HERO SECTION --- 
+*/
+#hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+#hero p {
+    font-size: 1.5rem;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    animation: fade-in 2s ease-in 1s forwards;
+    opacity: 0;
+}
+
+/* --- GLITCH EFFECT (for Hero H1) --- 
+*/
+.glitch {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 7rem;
+    color: #fff;
+    text-shadow: 0 0 10px var(--primary-color);
+    position: relative;
+    animation: fade-in 1s ease-out;
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-color);
+    overflow: hidden;
+}
+
+.glitch::before {
+    left: 2px;
+    text-shadow: -2px 0 var(--secondary-color);
+    animation: glitch-anim-1 2s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+    left: -2px;
+    text-shadow: 2px 0 var(--primary-color);
+    animation: glitch-anim-2 2s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim-1 {
+    0% { clip-path: inset(10% 0 80% 0); }
+    100% { clip-path: inset(70% 0 10% 0); }
+}
+
+@keyframes glitch-anim-2 {
+    0% { clip-path: inset(80% 0 5% 0); }
+    100% { clip-path: inset(5% 0 90% 0); }
+}
+
+/* --- ABOUT US SECTION --- 
+*/
+#about {
+    padding: 100px 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    background: rgba(0, 255, 255, 0.02);
+}
+
+.content-box {
+    max-width: 800px;
+    padding: 3rem;
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    background: rgba(2, 0, 16, 0.7);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
+    animation: fade-up 1.5s ease-out;
+}
+
+#about h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.5rem;
+    color: #fff;
+    text-shadow: 0 0 10px var(--primary-color);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+#about p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #c0ffff; /* Lighter cyan for readability */
+    text-align: justify;
+}
+
+/* --- GLOBAL ANIMATIONS --- 
+*/
+@keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fade-up {
+    from { opacity: 0; transform: translateY(50px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-in {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(0); }
+}
+
+/* --- CREATOR CREDIT & ANIMATIONS --- */
+
+#creator-credit {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 1000;
+    
+    /* Sci-fi font */
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1rem;
+    
+    padding: 10px 20px;
+    
+    /* Animated Rainbow Border */
+    border: 2px solid transparent;
+    background: 
+        /* 1. This is the inner background (matches page) */
+        linear-gradient(var(--bg-color), var(--bg-color)) padding-box,
+        /* 2. This is the outer border (the gradient) */
+        linear-gradient(90deg, #ff00ff, #00ffff, #00ff00, #ffff00, #ff0000, #ff00ff) border-box;
+    background-size: 200% 100%;
+    animation: gradient-pan 3s linear infinite;
+}
+
+/* Make the link inside fill the box and look right */
+#creator-credit a {
+    text-decoration: none;
+    color: var(--primary-color);
+    text-shadow: 0 0 5px var(--primary-color);
+    display: block;
+}
+
+@keyframes gradient-pan {
+    0% { background-position: 100% 50%; }
+    50% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+/* --- LETTER FALL APART ANIMATION --- */
+
+/* This makes the letters individually animatable */
+.char {
+    display: inline-block;
+    position: relative; /* Allows z-index on hover */
+    
+    /* This transition is for when they REASSEMBLE (on un-hover) */
+    transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                opacity 1s ease;
+}
+/* * This is the "reassemble on top of crosslinks" part.
+ * We move each letter to the top-center of the viewport,
+ * relative to its starting position.
+*/
+#creator-credit:hover .char:nth-child(1) { /* V */
+    /* * [FIXED]
+     * transform: translate( [horizontal] , [vertical] )
+     * Horizontal: -51vw (most left)
+     * Vertical: -45vh (moves up to vertical center)
+     * Scale: 3.5 (larger font)
+    */
+    transform: translate(-51vw, -30vh) rotate(720deg) scale(3.5);
+}
+#creator-credit:hover .char:nth-child(2) { /* a */
+    transform: translate(-49vw, -30vh) rotate(680deg) scale(3.5);
+    transition-delay: 0.05s;
+}
+#creator-credit:hover .char:nth-child(3) { /* n */
+    transform: translate(-47vw, -30vh) rotate(700deg) scale(3.5);
+    transition-delay: 0.1s;
+}
+#creator-credit:hover .char:nth-child(4) { /* s */
+    transform: translate(-45vw, -30vh) rotate(750deg) scale(3.5);
+    transition-delay: 0.15s;
+}
+#creator-credit:hover .char:nth-child(5) { /* h */
+    /* * [FIXED]
+     * Horizontal: -43vw (most right)
+    */
+    transform: translate(-43vw, -30vh) rotate(690deg) scale(3.5);
+    transition-delay: 0.2s;
+}

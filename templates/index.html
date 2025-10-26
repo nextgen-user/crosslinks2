@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crosslinks - The Face of NSUT</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <div id="holographic-cursor"></div>
+
+    <div class="scanlines"></div>
+
+    <nav>
+        <div class="logo">
+            <a href="#hero">CROSSLINKS</a>
+        </div>
+        <ul>
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#">Events</a></li>
+            <li><a href="#">Team</a></li>
+        </ul>
+    </nav>
+
+    <section id="hero">
+        <h1 class="glitch" data-text="CROSSLINKS">CROSSLINKS</h1>
+        <p>THE FACE OF NSUT</p>
+    </section>
+
+    <section id="about">
+        <div class="content-box">
+            <h2>ABOUT US</h2>
+            <p>
+                Crosslinks is the Student & Public Relations Society of NSUT. 
+                It is one of the most well-known societies of our college. 
+                It brings to you everything there is to know about NSUT and 
+                puts our institution on a national platform. Whether it's 
+                about connecting students and authorities together, promoting 
+                the college, or organizing numerous events and fests 
+                throughout the year, Crosslinks does it all.
+            </p>
+        </div>
+    </section>
+    <div id="creator-credit">
+        <a href="#"> Made by 
+            <span class="name">
+                <span class="char">V</span>
+                <span class="char">a</span>
+                <span class="char">n</span>
+                <span class="char">s</span>
+                <span class="char">h</span>
+            </span>
+        </a>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
